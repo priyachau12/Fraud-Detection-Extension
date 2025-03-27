@@ -6,7 +6,7 @@ chrome.runtime.onInstalled.addListener(() => {
     settings: {
       autoScan: true,
       notifyOnDetection: true,
-      scanLevel: "standard", // standard, aggressive, minimal
+      scanLevel: "standard", // standard,   aggressive, minimal
     },
   });
 });
