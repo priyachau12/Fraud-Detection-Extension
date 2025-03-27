@@ -1,0 +1,32 @@
+
+
+  {
+  "manifest_version": 3,
+  "name": "Job Post Analyzer",
+  "version": "1.0",
+  "description": "AI-Powered Job Scam Detector – Stay Safe, Stay Smart!",
+  "permissions": ["activeTab", "storage", "scripting"],
+  "host_permissions": ["*://*.linkedin.com/*", "*://*.indeed.com/*", "*://*.monster.com/*", "*://*.glassdoor.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*", "*://*.indeed.com/*", "*://*.monster.com/*", "*://*.glassdoor.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

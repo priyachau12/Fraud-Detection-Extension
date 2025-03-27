@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Post Analyzer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Job Post Analyzer</h1>
+      <p class="tagline">AI-Powered Job Scam Detector – Stay Safe, Stay Smart!</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-button active" data-tab="analyzer">Analyzer</button>
+      <button class="tab-button" data-tab="history">History</button>
+      <button class="tab-button" data-tab="settings">Settings</button>
+    </div>
+    
+    <div class="tab-content">
+      <!-- Analyzer Tab -->
+      <div id="analyzer" class="tab-panel active">
+        <div class="input-section">
+          <h2>Enter Job URL or paste a job post</h2>
+          <input type="text" id="job-url" placeholder="Enter job posting URL">
+          <textarea id="job-content" placeholder="Paste job posting content here"></textarea>
+          <button id="analyze-button" class="primary-button">Analyze Job</button>
+          <button id="scan-page-button" class="secondary-button">Scan Current Page</button>
+        </div>
+        
+        <div id="results-section" class="results-section hidden">
+          <div class="result-header">
+            <h2>Analysis Results</h2>
+            <span id="timestamp"></span>
+          </div>
+          
+          <div class="risk-meter">
+            <div class="risk-label">Risk Score</div>
+            <div class="risk-value">
+              <span id="risk-score">0</span>%
+            </div>
+            <div class="meter">
+              <div id="risk-meter-fill"></div>
+            </div>
+            <div id="risk-level-badge" class="risk-badge">Unknown</div>
+          </div>
+          
+          <div class="result-details">
+            <h3>Red Flags Detected</h3>
+            <ul id="red-flags-list"></ul>
+            
+            <h3>Recommendations</h3>
+            <ul id="recommendations-list"></ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- History Tab -->
+      <div id="history" class="tab-panel">
+        <div class="stats-section">
+          <div class="stat-card">
+            <div class="stat-value" id="scams-detected">0</div>
+            <div class="stat-label">Scams Detected</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="jobs-scanned">0</div>
+            <div class="stat-label">Jobs Scanned</div>
+          </div>
+        </div>
+        
+        <h2>Recent Scans</h2>
+        <div id="history-list" class="history-list">
+          <div class="empty-state">No scan history yet</div>
+        </div>
+      </div>
+      
+      <!-- Settings Tab -->
+      <div id="settings" class="tab-panel">
+        <h2>Settings</h2>
+        <div class="settings-group">
+          <div class="setting-item">
+            <label for="auto-scan">
+              <input type="checkbox" id="auto-scan" checked>
+              Automatically scan job pages
+            </label>
+            <p class="setting-description">Scan job postings automatically when you visit them</p>
+          </div>
+          
+          <div class="setting-item">
+            <label for="show-notifications">
+              <input type="checkbox" id="show-notifications" checked>
+              Show on-page warnings
+            </label>
+            <p class="setting-description">Display warning banners for suspicious job postings</p>
+          </div>
+          
+          <div class="setting-item">
+            <label for="scan-level">Scan sensitivity</label>
+            <select id="scan-level">
+              <option value="minimal">Minimal (fewer alerts)</option>
+              <option value="standard" selected>Standard</option>
+              <option value="aggressive">Aggressive (more alerts)</option>
+            </select>
+          </div>
+        </div>
+        
+        <button id="save-settings" class="primary-button">Save Settings</button>
+      </div>
+    </div>
+    
+    <footer>
+      <!-- <p>Protects job seekers from scams & phishing attempts. <br>
+      Saves time by filtering out unreliable job listings.</p> -->
+    </footer>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
