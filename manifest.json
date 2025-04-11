@@ -1,30 +1,14 @@
 {
-  "manifest_version": 3,
-  "name": "Job Post Analyzer",
-  "version": "1.0",
-  "description": "AI-Powered Job Scam Detector – Stay Safe, Stay Smart!",
-  "permissions": ["activeTab", "storage", "scripting"],
-  "host_permissions": [
-    "*://*.linkedin.com/*",
-    "*://*.indeed.com/*",
-    "*://*.monster.com/*",
-    "*://*.glassdoor.com/*"
-  ],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*.linkedin.com/*",
-        "*://*.indeed.com/*",
-        "*://*.monster.com/*",
-        "*://*.glassdoor.com/*"
-      ],
-      "js": ["content.js"]
-    }
-  ],
-  "action": {
-    "default_popup": "popup.html"
+    "manifest_version": 3,
+    "name": "raj Analyzer",
+    "version": "1.0",
+    "description": "Detects fake job postings from text or images.",
+    "action": {
+      "default_popup": "index.html"
+    },
+    "permissions": ["storage", "activeTab", "scripting"],
+    "host_permissions": [
+      "https://fake-job-post-detection.onrender.com/*"
+    ]
   }
-}
+  

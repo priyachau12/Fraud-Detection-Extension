@@ -1,0 +1,90 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#317EFB"/>
+  <title>Job Post Analyzer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <script src="https://unpkg.com/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+</head>
+<body>
+  <div class="form-container">
+    <form id="jobForm">
+      <div class="form-group">
+        <label for="url">Enter Job URL or paste a job post</label>
+        <input id="url" type="text" placeholder="Enter job posting URL" />
+      </div>
+
+      <div class="form-group">
+        <textarea
+          id="jobPost"
+          placeholder="Paste job posting content here"
+        ></textarea>
+      </div>
+
+      <div class="form-group file-upload">
+        <label for="imageUpload" class="upload-label">
+          <span>Upload Job Image (JPG/PNG)</span>
+        </label>
+        <input id="imageUpload" type="file" accept="image/jpeg, image/png" style="display: none;"/>
+        <p id="extractingText" class="extracting-text">Extracting text from image...</p>
+      </div>
+
+      <div class="form-group" id="platformInput" style="display: none;">
+        <label for="platform">Job Platform:</label>
+        <input id="platform" type="text" placeholder="Enter job platform (LinkedIn, Indeed, etc.)" />
+      </div>
+
+      <button type="submit" class="submit-button">Analyze Job</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Post Analyzer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Fake Job Post Analyzer</h2>
+
+    <input type="text" id="url" placeholder="Paste job URL" />
+
+    <textarea id="jobPost" placeholder="Paste job description"></textarea>
+
+    <input type="file" id="imageUpload" accept="image/jpeg, image/png" />
+
+    <input type="text" id="platform" placeholder="Platform (LinkedIn, etc)" />
+
+    <button id="analyzeBtn">Analyze Job</button>
+
+    <div id="loading" class="hidden">Analyzing...</div>
+
+    <div id="resultContainer" class="hidden">
+      <h3>Analysis Result:</h3>
+      <pre id="result"></pre>
+    </div>
+
+    <div id="errorContainer" class="hidden">
+      <h3>Error:</h3>
+      <pre id="error"></pre>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
