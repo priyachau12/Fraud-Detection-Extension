@@ -1,14 +1,24 @@
 {
-    "manifest_version": 3,
-    "name": "raj Analyzer",
-    "version": "1.0",
-    "description": "Detects fake job postings from text or images.",
-    "action": {
-      "default_popup": "index.html"
+  "manifest_version": 3,
+  "name": "TRAP - Fraud Job Post Analyzer",
+  "version": "1.0.1",
+  "description": "Analyzes job postings to detect potential scams from text or images.",
+  "icons": {
+    "16": "icons/abc2.png",
+    "48": "icons/abc2.png",
+    "128": "icons/abc2.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "icons/abc2.png",
+      "48": "icons/abc2.png",
+      "128": "icons/abc2.png"
     },
-    "permissions": ["storage", "activeTab", "scripting"],
-    "host_permissions": [
-      "https://fake-job-post-detection.onrender.com/*"
-    ]
-  }
-  
+    "default_title": "TRAP - Fraud Job Detector"
+  },
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "http://127.0.0.1:5000/*"
+  ]
+}

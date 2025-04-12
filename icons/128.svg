@@ -1,0 +1,49 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#1a1a2e" />
+    <stop offset="100%" stop-color="#16213e" />
+  </linearGradient>
+  <circle cx="64" cy="64" r="64" fill="url(#bg-gradient)" />
+  
+  <!-- Decorative grid pattern -->
+  <pattern id="grid" width="15" height="15" patternUnits="userSpaceOnUse">
+    <path d="M 15 0 L 0 0 0 15" fill="none" stroke="#4a4e69" stroke-width="0.3" opacity="0.3" />
+  </pattern>
+  <circle cx="64" cy="64" r="64" fill="url(#grid)" />
+  
+  <!-- Main TRAP text -->
+  <text x="64" y="70" font-family="Arial, sans-serif" font-weight="900" font-size="30" text-anchor="middle" fill="#e94560">TRAP</text>
+  
+  <!-- Mouse trap icon -->
+  <g transform="translate(73, 45) scale(0.3)">
+    <rect x="10" y="10" width="80" height="10" fill="#f1c40f" rx="2" ry="2" />
+    <rect x="45" y="-15" width="10" height="25" fill="#f1c40f" rx="2" ry="2" />
+    <path d="M 50 -15 A 20 20 0 0 1 70 -35" stroke="#f1c40f" stroke-width="5" fill="none" />
+    <circle cx="70" cy="-35" r="7" fill="#e94560" />
+  </g>
+  
+  <!-- Magnifying glass with shield -->
+  <g transform="translate(43, 45) scale(0.25)">
+    <circle cx="0" cy="0" r="25" fill="none" stroke="#3EDBF0" stroke-width="8" />
+    <line x1="20" y1="20" x2="40" y2="40" stroke="#3EDBF0" stroke-width="8" stroke-linecap="round" />
+    <path d="M 0 -15 L -15 10 L 0 5 L 15 10 Z" fill="#3EDBF0" />
+  </g>
+  
+  <!-- Decorative elements -->
+  <circle cx="13" cy="13" r="2" fill="#3EDBF0" />
+  <circle cx="115" cy="13" r="2" fill="#3EDBF0" />
+  <circle cx="13" cy="115" r="2" fill="#3EDBF0" />
+  <circle cx="115" cy="115" r="2" fill="#3EDBF0" />
+  <circle cx="64" cy="13" r="2" fill="#e94560" />
+  <circle cx="64" cy="115" r="2" fill="#e94560" />
+  <circle cx="13" cy="64" r="2" fill="#e94560" />
+  <circle cx="115" cy="64" r="2" fill="#e94560" />
+  
+  <!-- Outer glow effect -->
+  <circle cx="64" cy="64" r="62" fill="none" stroke="#e94560" stroke-width="1" opacity="0.2" />
+  <circle cx="64" cy="64" r="60" fill="none" stroke="#e94560" stroke-width="1" opacity="0.1" />
+  
+  <!-- Tagline -->
+  <text x="64" y="85" font-family="Arial, sans-serif" font-size="7" text-anchor="middle" fill="#ffffff">Fraud Detection System</text>
+</svg>

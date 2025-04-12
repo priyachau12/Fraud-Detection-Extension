@@ -1,58 +1,3 @@
-// const form = document.getElementById('jobForm');
-// const extractingText = document.getElementById('extractingText');
-// const platformInput = document.getElementById('platformInput');
-
-// document.getElementById('imageUpload').addEventListener('change', async (e) => {
-//   const file = e.target.files[0];
-//   if (!file) return;
-
-//   extractingText.style.display = 'block';
-
-//   try {
-//     const { data: { text } } = await Tesseract.recognize(file, 'eng', {
-//       logger: m => console.log(m)
-//     });
-
-//     document.getElementById('jobPost').value = text;
-//     platformInput.style.display = 'block';
-//   } catch (error) {
-//     alert('Failed to extract text from image.');
-//     console.error(error);
-//   } finally {
-//     extractingText.style.display = 'none';
-//   }
-// });
-
-// document.getElementById('jobPost').addEventListener('click', () => {
-//   platformInput.style.display = 'block';
-// });
-
-// form.addEventListener('submit', async (e) => {
-//   e.preventDefault();
-
-//   const url = document.getElementById('url').value;
-//   const jobPost = document.getElementById('jobPost').value;
-//   const platform = document.getElementById('platform').value;
-
-//   try {
-//     const response = await fetch('http://127.0.0.1:5000/api/analyze', {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({ url, job_post: jobPost, platform })
-//     });
-
-//     const result = await response.json();
-//     alert('Response received. Check console for details.');
-//     console.log(result);
-//   } catch (err) {
-//     alert('Error submitting job post for analysis.');
-//     console.error(err);
-//   }
-// });
-
-
-
-
 const analyzeBtn = document.getElementById("analyzeBtn");
 const resultContainer = document.getElementById("resultContainer");
 const errorContainer = document.getElementById("errorContainer");
@@ -67,13 +12,52 @@ const imageUpload = document.getElementById("imageUpload");
 
 let extractedText = "";
 
+// Function to disable specific inputs
+function disableInputs(except) {
+  urlInput.disabled = except !== urlInput;
+  jobPostInput.disabled = except !== jobPostInput;
+  imageUpload.disabled = except !== imageUpload;
+}
+
+// Event Listeners to disable others on focus/click
+urlInput.addEventListener("focus", () => disableInputs(urlInput));
+jobPostInput.addEventListener("focus", () => disableInputs(jobPostInput));
+imageUpload.addEventListener("click", () => disableInputs(imageUpload));
+
+// Re-enable all inputs if clicked outside the main input areas
+document.addEventListener("click", (e) => {
+  if (![urlInput, jobPostInput, imageUpload].includes(e.target)) {
+    urlInput.disabled = false;
+    jobPostInput.disabled = false;
+    imageUpload.disabled = false;
+  }
+});
+
+// OCR from image using OCR.space API
 imageUpload.addEventListener("change", async (e) => {
   const file = e.target.files[0];
   if (!file) return;
 
+  disableInputs(imageUpload);
   loading.classList.remove("hidden");
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("apikey", "K81496851688957"); // Replace with your API key
+  formData.append("language", "eng");
+
   try {
-    const { data: { text } } = await Tesseract.recognize(file, 'eng');
+    const response = await fetch("https://api.ocr.space/parse/image", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+    if (data.IsErroredOnProcessing) {
+      throw new Error(data.ErrorMessage || "OCR failed");
+    }
+
+    const text = data.ParsedResults?.[0]?.ParsedText || "";
     jobPostInput.value = text;
     extractedText = text;
   } catch (err) {
@@ -84,6 +68,7 @@ imageUpload.addEventListener("change", async (e) => {
   }
 });
 
+// Analyze button click
 analyzeBtn.addEventListener("click", async () => {
   resultContainer.classList.add("hidden");
   errorContainer.classList.add("hidden");
@@ -103,7 +88,6 @@ analyzeBtn.addEventListener("click", async () => {
     });
 
     const data = await response.json();
-
     if (!response.ok) throw new Error(data.error || "Unknown error");
 
     result.textContent = JSON.stringify(data, null, 2);
