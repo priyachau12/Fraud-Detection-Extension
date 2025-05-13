@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: fake-job-post-detection
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+    autoDeploy: true
