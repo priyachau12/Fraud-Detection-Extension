@@ -409,3 +409,96 @@ h3 i {
   visibility: visible;
   opacity: 1;
 }
+
+
+/* Add these to your existing styles.css */
+.clerk-auth-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.clerk-user-button {
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.clerk-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Update logo-container to space-between */
+.logo-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.result-card {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.result-card i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.result-card h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+}
+
+.result-card .fraud {
+  color: #e53935;
+}
+
+.result-card .legit {
+  color: #43a047;
+}
+
+.result-card .confidence {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.result-card .red-flags {
+  padding: 0.8rem;
+  background: #fff3e0;
+  border-radius: 8px;
+  color: #e65100;
+  font-size: 0.9rem;
+}
+
+.result-card .fas.fa-skull-crossbones {
+  color: #e53935;
+  animation: pulse 1.5s infinite;
+}
+
+.result-card .fas.fa-check-circle {
+  color: #43a047;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}

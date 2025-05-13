@@ -4,71 +4,27 @@ const errorContainer = document.getElementById("errorContainer");
 const result = document.getElementById("result");
 const error = document.getElementById("error");
 const loading = document.getElementById("loading");
-
 const urlInput = document.getElementById("url");
-const jobPostInput = document.getElementById("jobPost");
-const platformInput = document.getElementById("platform");
-const imageUpload = document.getElementById("imageUpload");
 
-let extractedText = "";
+// Convert radio button values to boolean
+const getBooleanValue = (value) => value === 'yes';
 
-// Function to disable specific inputs
-function disableInputs(except) {
-  urlInput.disabled = except !== urlInput;
-  jobPostInput.disabled = except !== jobPostInput;
-  imageUpload.disabled = except !== imageUpload;
-}
-
-// Event Listeners to disable others on focus/click
-urlInput.addEventListener("focus", () => disableInputs(urlInput));
-jobPostInput.addEventListener("focus", () => disableInputs(jobPostInput));
-imageUpload.addEventListener("click", () => disableInputs(imageUpload));
-
-// Re-enable all inputs if clicked outside the main input areas
-document.addEventListener("click", (e) => {
-  if (![urlInput, jobPostInput, imageUpload].includes(e.target)) {
-    urlInput.disabled = false;
-    jobPostInput.disabled = false;
-    imageUpload.disabled = false;
-  }
-});
-
-// OCR from image using OCR.space API
-imageUpload.addEventListener("change", async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  disableInputs(imageUpload);
-  loading.classList.remove("hidden");
-
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("apikey", "K81496851688957"); // Replace with your API key
-  formData.append("language", "eng");
-
+// Get current tab URL when extension opens
+document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const response = await fetch("https://api.ocr.space/parse/image", {
-      method: "POST",
-      body: formData
-    });
-
-    const data = await response.json();
-    if (data.IsErroredOnProcessing) {
-      throw new Error(data.ErrorMessage || "OCR failed");
+    // Check if we're running as a browser extension
+    if (typeof chrome !== 'undefined' && chrome.tabs) {
+      const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (tabs?.[0]?.url) {
+        urlInput.value = tabs[0].url;
+      }
     }
-
-    const text = data.ParsedResults?.[0]?.ParsedText || "";
-    jobPostInput.value = text;
-    extractedText = text;
   } catch (err) {
-    error.textContent = "Failed to extract text from image.";
-    errorContainer.classList.remove("hidden");
-  } finally {
-    loading.classList.add("hidden");
+    console.error("Error getting current tab URL:", err);
   }
 });
 
-// Analyze button click
+
 analyzeBtn.addEventListener("click", async () => {
   resultContainer.classList.add("hidden");
   errorContainer.classList.add("hidden");
@@ -76,26 +32,58 @@ analyzeBtn.addEventListener("click", async () => {
 
   const payload = {
     url: urlInput.value || null,
-    job_post: jobPostInput.value || extractedText || null,
-    platform: platformInput.value || null
+    has_logo: document.querySelector('input[name="hasLogo"]:checked')?.value === "yes",
+    has_question: document.querySelector('input[name="hasQuestion"]:checked')?.value === "yes"
   };
 
   try {
     const response = await fetch("http://127.0.0.1:5000/api/analyze", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
       body: JSON.stringify(payload)
     });
 
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "Unknown error");
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+    }
 
-    result.textContent = JSON.stringify(data, null, 2);
+    const data = await response.json();
+
+    result.innerHTML = data.fraudulent === "Yes"
+  ? `<span style="color: red; font-weight: bold;">🚨 Job post is <u>FRAUD</u></span>`
+  : `<span style="color: green; font-weight: bold;">✅ Job post is <u>NOT FRAUD</u></span>`;
+
+
     resultContainer.classList.remove("hidden");
   } catch (err) {
-    error.textContent = err.message;
+    error.textContent = err.message || "Failed to analyze job post";
     errorContainer.classList.remove("hidden");
   } finally {
     loading.classList.add("hidden");
   }
 });
+
+function updateResultBadges(data) {
+  const badgesContainer = document.getElementById("resultBadges");
+  badgesContainer.innerHTML = '';
+  
+  if (data.isFraudulent) {
+    badgesContainer.innerHTML += `<span class="badge danger">Potential Fraud (${data.confidence})</span>`;
+  } else {
+    badgesContainer.innerHTML += `<span class="badge success">Likely Legitimate</span>`;
+  }
+
+  if (data.redFlags?.length > 0) {
+    badgesContainer.innerHTML += `<span class="badge warning">${data.redFlags.length} Red Flags</span>`;
+  }
+}
+
+function showError(message) {
+  error.textContent = message;
+  errorContainer.classList.remove("hidden");
+  loading.classList.add("hidden");
+}
